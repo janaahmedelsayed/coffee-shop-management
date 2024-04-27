@@ -1,0 +1,544 @@
+from tkinter import *
+from tkinter.ttk import Combobox
+from tkinter.ttk import Treeview
+from tkinter import messagebox
+from tkinter import ttk
+import sqlite3
+
+
+
+# instance
+root = Tk()
+root.title("login ")
+coco=sqlite3.connect('C:\\Users\\jana\\OneDrive\\Desktop\\cafemanagement.db',timeout=30)
+
+# loginform
+def setscreen(w,h): 
+    screenheight=root.winfo_screenheight()
+    screenwidth=root.winfo_screenwidth()
+    x=int((screenwidth-w)/2)
+    y=int((screenheight-h)/2)
+    root.geometry(f"{w}x{h}+{x}+{y}") 
+   
+
+
+setscreen(1350, 700)
+padx = 10
+pady = 10
+root.configure(bg="#ffffff")
+root.resizable(False, False)
+img = PhotoImage(file='D:/pythonproject/images/tea22.png')
+Label(root, image=img, bg='white').place(x=50, y=50)
+font = ('Microsoft yaHei UI Light', 17)
+frame = Frame(root, width=400, height=400, bg='white')
+frame.place(x=700, y=120)
+heading = Label(frame, text='sign in ', fg='#bdb2ff', bg='white', font=('Tahoma', 27, 'bold'))
+heading.place(x=150, y=50)
+
+# check user name or password
+def on_enter(e):
+    txt_user.delete(0, 'end')
+
+
+def on_leave(e):
+    name = txt_user.get()
+    if name == '':
+        txt_user.insert(0, 'username')
+
+
+# lb1=Label(frame,text='username',font=font)
+txt_user = Entry(frame, width=25, fg='black', border=0, bg='white', font=font)
+txt_user.place(x=30, y=150)
+txt_user.insert(0, 'username')
+txt_user.bind('<FocusIn>', on_enter)
+txt_user.bind('<FocusOut>', on_leave)
+Frame(frame, width=295, height=2, bg='black').place(x=30, y=180)
+
+
+# password
+def on_enter2(e):
+    txt_pass.delete(0, 'end')
+def on_leave2(e):
+    name = txt_pass.get()
+    if name == '':
+        txt_pass.insert(0, 'password')
+#///////
+def log():
+    username=txt_user.get()
+    passowrd=txt_pass.get()
+    if username=='reo' and passowrd=='0000':
+        messagebox.showinfo('info','valid')  
+        root.withdraw()
+        from tkinter.ttk import Combobox
+        from tkinter.ttk import Treeview
+        from tkinter import ttk
+        import sqlite3
+        screen= Toplevel(root)
+        screen.title('Home page' )
+        w =1200
+        def setscreen(w,h): 
+            screenheight=screen.winfo_screenheight()
+            screenwidth=screen.winfo_screenwidth()
+            x=int((screenwidth-w)/2)
+            y=int((screenheight-h)/2)
+            screen.geometry(f"{w}x{h}+{x}+{y}") 
+           
+
+        setscreen(1350, 700)
+
+        coco=sqlite3.connect('C:\\Users\\jana\\OneDrive\\Desktop\\cafemanagement.db',timeout=30)
+        padx = 10
+        pady = 10
+        screen.configure(bg="#ffffff")
+        screen.resizable(False, False)
+        img = PhotoImage(file='D:/pythonproject/images/tea22.png')
+        Label(screen, image=img, bg='white').place(x=50, y=50)
+        font = ('EB Garamond', 22)
+
+        def open_bill():
+            screen.withdraw()
+
+            from tkinter.ttk import Combobox
+            from tkinter.ttk import Treeview
+            from tkinter import messagebox
+            from tkinter import ttk
+            import sqlite3
+
+
+
+            screen2 =Toplevel()
+            screen2.title('place order')
+            screen2.resizable(False,False)
+            conn=sqlite3.connect('C:\\Users\\jana\\OneDrive\\Desktop\\cafemanagement.db',timeout=30)
+             
+            cur=coco.cursor()
+            def setscreen(w,h): 
+                screenheight=screen2.winfo_screenheight()
+                screenwidth=screen2.winfo_screenwidth()
+                x=int((screenwidth-w)/2)
+                y=int((screenheight-h)/2)
+                screen2.geometry(f"{w}x{h}+{x}+{y}") 
+               
+
+            setscreen(1350, 700)
+            padx = 10
+            pady = 10
+            screen2.configure(bg="#f5efff")
+            screen2.resizable(False, False)
+
+            font = ('Microsoft yaHei UI Light', 17)
+
+
+            ## 6 lables/////
+            #1 label
+            frame1=Frame(screen2,width=1350,height=50,background='#f5efff')
+            frame1.place(x=0, y=0)
+            head=Label(frame1,text='place order',fg='#bdb2ff', bg='#f5efff', font=('Tahoma', 27, 'bold'))
+            head.place(x=550)
+            #////
+            frame2=Frame(screen2,width=1350,height=225,background='#f5efff')
+            frame2.place(x=0,y=60)
+
+            frame2.pack_propagate(False)
+
+
+
+            cus_name=Label(frame2,text="customer Name",fg='black',bg='#f5efff',font=font)
+            txt_name=Entry(frame2,bd=1,width=25)
+            cus_name.focus()
+            cus_name.place(x=0,y=0)
+            txt_name.place(x=0,y=30)
+            #//////////////
+            ph_num=Label(frame2,text="phone Number",fg='black',bg='#f5efff',font=font)
+            txt_ph=Entry(frame2,bd=1,width=25)
+            ph_num.place(x=0,y=60)
+            txt_ph.place(x=0,y=90)
+            #///////////////
+            def my_upd(*args):
+                my_data=cur.execute("SELECT name FROM Products WHERE category='"+sel.get()+"'")
+                my_list2=[r for r,in my_data]
+                cmbx_items.set(my_list2[0])
+                cmbx_items['values']=my_list2
+
+                
+                
+                
+                
+                
+            my_data=cur.execute('SELECT name_cat FROM category')
+            my_list=[r for r,in my_data]
+            sel=StringVar()
+            sel.set(my_list[0])
+
+
+            lb_cat=Label(frame2,text=" category",fg='black',bg='#f5efff',font=font)
+            cmbx_cat=Combobox(frame2,state='readonly',values=my_list,textvariable=sel)
+            lb_cat.place(x=450,y=0)
+            cmbx_cat.place(x=450,y=35)
+            sel.trace('w',my_upd)
+            #///////////////
+            my_list2=[]
+            lb_item=Label(frame2,text=" item",fg='black',bg='#f5efff',font=font)
+            cmbx_items=Combobox(frame2,state='readonly',values=my_list2)
+            my_upd()
+
+            lb_item.place(x=450,y=60)
+            cmbx_items.place(x=450,y=95)
+
+            #/////
+            lb_qua=Label(frame2,text=" Quantity",fg='black',bg='#f5efff',font=font)
+            txt_qua=Entry(frame2,bd=1)
+            lb_qua.place(x=720,y=0)
+            txt_qua.place(x=720,y=35)
+
+            #//////
+            def view():
+                cur.execute('SELECT * FROM Customer_bill')
+                res=cur.fetchall()
+                for i in res:
+                    tree.insert("", "end",values=i)
+            #/////
+            def clear_all():
+               for item in tree.get_children():
+                  tree.delete(item)
+            #////
+            def add():
+                name_c=txt_name.get()
+                ph=txt_ph.get()
+                it=cmbx_items.get()
+                qua=txt_qua.get()
+                cur.execute("SELECT price FROM Products WHERE name='"+it+"'")
+                res=cur.fetchall()
+                pr=res[0][0]
+                x=int(qua)
+                total=x*pr
+                #//////
+                cur.execute('INSERT INTO Customer_bill (customer_name,phone,item,quantity,Total_price) VALUES(?,?,?,?,?) ',(name_c,ph,it,qua,total))
+                conn.commit()
+                messagebox.showinfo('info','succefull')
+                clear_all()
+                view()
+            #/////
+            def clear():
+                selc=tree.selection()[0]
+                x=tree.item(selc)['values'][0]
+                cur.execute('DELETE FROM  Customer_bill WHERE id=?',(x,))
+                messagebox.showinfo('info','deleted succesfull')
+                clear_all()
+                view()
+            #/////
+            def bc():
+                screen.deiconify()
+                screen2.destroy()
+
+
+            #/////
+            btn_add=Button(frame2,text='ADD',font=font ,bg= '#87c38f', fg= 'white', width=10,command=add)
+            btn_del=Button(frame2,text='DELETE',font=font ,bg= '#87c38f', fg= 'white', width=10 , height=1,command=clear)
+            btn_bk=Button(frame2,text='Back',font=font ,bg= '#87c38f', fg= 'white', width=10 , height=1,command=bc)
+            btn_add.place(x=20,y=150)
+            btn_del.place(x=300,y=150)
+            btn_bk.place(x=1200,y=150)
+            #//////
+            frame3=Frame(screen2,width=1350,height=50,background='#f5efff')
+            frame3.place(x=0,y=300)
+            head2=Label(frame3,text='Customer Bill',fg='#bdb2ff',bg='#f5efff', font=('tahoma',22,'bold'))
+            head2.place(x=550)
+            #///
+            frame4=Frame(screen2,width=1350,height=350,background='white')
+            frame4.place(x=0,y=350)
+            #/////////////
+
+            col =['id','customer name','phone number','item','quantity','Total']
+
+            tree=Treeview(frame4,columns=col,show='headings',height=18,selectmode='browse')
+            tree.heading('id', text='id')
+            tree.heading('customer name', text='customer name')
+            tree.heading('phone number', text='phone number')
+            tree.heading('item', text='item')
+            tree.heading('quantity', text='quantity')
+            tree.heading('Total', text='Total')
+
+            tree.column('id', width=100,anchor='center')
+            tree.column('customer name', width=400,anchor='center')
+            tree.column('phone number', width=400,anchor='center')
+            tree.column('item', width=200,anchor='center')
+            tree.column('quantity', width=125,anchor='center')
+            tree.column('Total', width=125,anchor='center')
+
+            sc=Scrollbar(frame4,orient='vertical',command=tree.yview,width=27)
+            tree.configure(yscroll=sc.set)
+            sc.place(x=1325,y=0)
+
+            view()
+
+            tree.place(x=0,y=0)
+
+            screen2.mainloop()
+
+
+        def open_cat():
+           screen.withdraw()
+           from tkinter.ttk import Combobox
+           from tkinter.ttk import Treeview
+           from tkinter import messagebox
+           from tkinter import ttk
+           import sqlite3
+
+
+           screen3 = Toplevel()
+           screen3.title("category ")
+
+
+           conn=sqlite3.connect('C:\\Users\\jana\\OneDrive\\Desktop\\cafemanagement.db',timeout=30)
+            
+           cur=conn.cursor()
+            
+
+           # loginform
+           def setscreen(w,h): 
+               screenheight=screen3.winfo_screenheight()
+               screenwidth=screen3.winfo_screenwidth()
+               x=int((screenwidth-w)/2)
+               y=int((screenheight-h)/2)
+               screen3.geometry(f"{w}x{h}+{x}+{y}") 
+
+
+           setscreen(1350, 700)
+           def view():
+               cur.execute('SELECT * FROM category')
+               res=cur.fetchall()
+               for i in res:
+                   tree.insert("", "end",values=i)
+
+           padx = 10
+           pady = 10
+           screen3.configure(bg="#f5efff")
+           screen3.resizable(False, False)
+           #img = PhotoImage(file='E:/nn/tea.png')
+           #Label(root, image=img, bg='white').place(x=50, y=50)
+           font = ('Tahoma', 19,'bold')
+           def on_enter(e):
+               txt_user.delete(0, 'end')
+
+
+           def on_leave(e):
+               name = txt_user.get()
+               if name == '':
+                   txt_user.insert(0, 'username')
+           frame = Frame(screen3, width=350, height=180, bg='#f5efff')
+           frame.place(x=750, y=5)
+           lbl1=Label(frame, text='Manage new category ', fg='#bdb2ff', bg='#f5efff',font=font)
+           lbl1.place(x=50,y=17)
+           txt_user = Entry(frame, width=25, fg='black', border=0, bg='#f5efff', font=('Microsoft yaHei UI Light',17))
+           txt_user.place(x=10, y=70)
+           txt_user.insert(0, 'NEW')
+           txt_user.bind('<FocusIn>', on_enter)
+           txt_user.bind('<FocusOut>', on_leave)
+           Frame(frame, width=295, height=2, bg='black').place(x=15, y=105)
+           frame2= Frame(screen3, width=400, height=400, bg='#f5efff')
+           frame2.place(x=700, y=190)
+           coulumns=['ID','category']
+           tree=Treeview(frame2,columns=coulumns,show='headings',height=100)
+           tree.heading('ID',text='ID')
+           tree.heading('category',text='category')
+           tree.place(x=50,y=0)
+           tree.column('ID',width=80,anchor='center')
+           tree.column('category',width=300,anchor='center')
+           def clear_all():
+              for item in tree.get_children():
+                 tree.delete(item)
+
+           view()
+           def add():
+               name_c=txt_user.get()
+               cur.execute('INSERT INTO category (name_cat) VALUES(?)',(name_c,))
+               conn.commit()
+               messagebox.showinfo('info','succefull')
+               clear_all()
+               view()
+           def clear():
+               selc=tree.selection()[0]
+               x=tree.item(selc)['values'][0]
+               cur.execute('DELETE FROM  category WHERE id=?',(x,))
+               conn.commit()
+               messagebox.showinfo('info','deleted succesfull')
+               clear_all()
+               view()
+                   
+           def bc():
+               screen.deiconify()
+               screen3.destroy()
+               
+           btn1 = Button(frame , text='add' , width=10, pady=7, fg='black', bg='#87c38f', border=0 ,command=add)
+           btn2 = Button(frame , text='clear' , width=10, pady=7, fg='black', bg='#87c38f', border=0,command=clear )
+           btn3 = Button(frame , text='back' , width=10, pady=7, fg='black', bg='#87c38f', border=0,command=bc)
+           btn1.place(x=130, y=130)
+           btn2.place(x=5, y=130)
+           btn3.place(x=250, y=130)
+           screen3.mainloop()
+            
+            
+        def open_pro():
+            screen.withdraw()
+            from tkinter.ttk import Combobox
+            from tkinter.ttk import Treeview
+            from tkinter import messagebox
+            from tkinter import ttk
+            import sqlite3
+            from tkinter import font
+
+
+            screen4= Toplevel()
+            screen4.title('Products' )
+            conn=sqlite3.connect('C:\\Users\\jana\\OneDrive\\Desktop\\cafemanagement.db',timeout=30)
+             
+            cur=conn.cursor()
+             
+
+            # loginform
+            def setscreen(w,h): 
+                screenheight=screen4.winfo_screenheight()
+                screenwidth=screen4.winfo_screenwidth()
+                x=int((screenwidth-w)/2)
+                y=int((screenheight-h)/2)
+                screen4.geometry(f"{w}x{h}+{x}+{y}") 
+
+
+            setscreen(1350, 700)
+            def view():
+                cur.execute('SELECT * FROM products')
+                res=cur.fetchall()
+                for i in res:
+                    tree.insert("", "end",values=i)
+                    
+            def clear_all():
+               for item in tree.get_children():
+                  tree.delete(item)
+            def add():
+                name_p=en1.get()
+                price=en2.get()
+                cat=combo.get()
+                cur.execute('INSERT INTO products (name,category,price) VALUES(?,?,?) ',(name_p,cat,price))
+                conn.commit()
+                messagebox.showinfo('info','succefull')
+                clear_all()
+                view()
+            padx = 10
+            pady = 10
+            screen4.configure(bg="#f5efff")
+            screen4.resizable(False, False)
+
+            font=('Losevka Term', 20 )
+
+            frame = Frame(screen4, width=600, height=650, bg='#f5efff')
+            frame.place(x=60, y=20)
+
+
+            lbl1=Label(frame,text='Name :',font=font, fg='black',border=0,bg='#f5efff')
+            lbl2=Label(frame,text='price :',font=font, fg='black',border=0,bg='#f5efff')
+            lbl3=Label(frame,text='category :',font=font, fg='black',border=0,bg='#f5efff')
+            lbl4=Label(frame,text='price :',font=font, fg='green',border=0,width=25)
+            lbl1.place(x=30,y=50)
+            lbl2.place(x=30,y=170)
+            lbl3.place(x=30,y=270)
+            #lbl4.place(x=30,y=50)
+            namevalue=StringVar()
+            phonevalue=StringVar()
+            categoryvalue=StringVar()
+
+            en1= Entry(frame, font=('Microsoft yaHei UI Light',15))
+            en2= Entry(frame, font=('Microsoft yaHei UI Light',15))
+            en3= Entry(frame, font=font)
+            en1.place(x=30,y=100)
+            en2.place(x=30,y=220)
+            #en3.place(x=30,y=320)
+            def view_co():
+                cur.execute('SELECT name_cat FROM category')
+                res=cur.fetchall()
+                data=[]
+                for i in res:
+                   data.append(i[0])
+                return data
+            s=view_co()
+            drinkvar=StringVar()
+            drinkvar.set(s[0])
+
+            combo=Combobox(frame ,textvariable=drinkvar, state='readonly',font=('Microsoft yaHei UI Light',10))
+
+            #combo.grid(row=2,column=1,columnspan=2)
+            combo.place(x=30,y=320)
+
+                
+            def clear():
+                selc=tree.selection()[0]
+                x=tree.item(selc)['values'][0]
+                cur.execute('DELETE FROM  products WHERE id=?',(x,))
+                conn.commit()
+                messagebox.showinfo('info','deleted succesfull')
+                clear_all()
+                view()
+            view_co()
+
+
+            def bc():
+                screen.deiconify()
+                screen4.destroy()
+                
+            btn2 = Button(frame , text='add' , width=25, pady=7, fg='black', bg='#87c38f', border=0,command=add )
+            btn3 = Button(frame , text='delete' ,width=25, pady=7, fg='black', bg='#87c38f', border=0,command=clear)
+            btn4 = Button(frame , text='back' ,width=25, pady=7, fg='black', bg='#87c38f', border=0,command=bc)
+            combo['values']=view_co()
+
+                          
+            btn2.place(x=30, y=450)
+            btn3.place(x=30, y=500)
+            btn4.place(x=30, y=550)
+            frame2 = Frame(screen4, width=600, height=650, bg='green')
+            frame2.place(x=700, y=20)
+            coulumns=['ID','name','category','price']
+            tree=Treeview(frame2,columns=coulumns,show='headings',height=100)
+            tree.heading('name',text='name')
+            tree.heading('category',text='category')
+            tree.heading('price', text='price')
+            tree.heading('ID', text='ID')
+            tree.place(x=0,y=0)
+            tree.column('ID',width=70,anchor='center')
+            tree.column('price',width=130,anchor='center')
+            tree.column('name',width=200,anchor='center')
+            tree.column('category',width=200,anchor='center')
+            tree.bind('<<treeviewselect>>',lambda event :print(event))
+            view()
+
+            screen4.mainloop()
+
+
+        frame = Frame(screen, width=400, height=400, bg='white')
+        frame.place(x=700, y=120)
+        heading = Label(frame, text='Home page ', fg='#bdb2ff', bg='white', font=('Tahoma', 27, 'bold'))
+        heading.place(x=145, y=70)
+
+        btn1 = Button(frame , text='Products' , font=font ,bg= 'green', fg= 'white', width=30 , height=4)
+        btn2 = Button(frame , text='Category' , font=font ,bg= 'green', fg= 'white', width=30 , height=4 )
+        btn3 = Button(frame , text='customer bill' , font=font ,bg= 'green', fg= 'white', width=30 , height=4 ) 
+        Button(frame, width=25, pady=10, text='products', fg='black', bg='#87c38f', border=0,command=open_pro).place(x=160, y=170)
+        Button(frame, width=25, pady=10, text='category', fg='black', bg='#87c38f', border=0,command=open_cat).place(x=160, y=250)
+        Button(frame, width=25, pady=10, text='customer bill', fg='black', bg='#87c38f', border=0,command=open_bill).place(x=160, y=330)
+        screen.mainloop()
+
+
+        
+        #///////
+    else :
+        messagebox.showerror('Error','invalid')
+
+txt_pass = Entry(frame, width=25, fg='black', border=0, bg='white', font=font,show='***')
+txt_pass.place(x=30, y=220)
+txt_pass.insert(0, 'password')
+txt_pass.bind('<FocusIn>',on_enter2)
+txt_pass.bind('<FocusOut>',on_leave2)
+Frame(frame, width=295, height=2, bg='black').place(x=30, y=250)
+Button(frame, width=39, pady=7, text='login', fg='black', bg='#87c38f', border=0,cursor='hand2',command=log).place(x=35, y=277)
+
+
+root.mainloop()
